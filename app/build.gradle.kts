@@ -1,17 +1,21 @@
+// build.gradle.kts (Module :app)
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    // Tambahkan plugin Kapt untuk Room (Commit 3)
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
     namespace = "com.example.lab_week_10"
-    compileSdk {
-        version = release(36)
-    }
+    // Diperbaiki: Naikkan ke 36 untuk mengatasi error AAR/compileSdk
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.lab_week_10"
         minSdk = 24
+        // Diperbaiki: Naikkan targetSdk sesuai compileSdk
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -29,15 +33,30 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        // Ganti ke Java 8 (Versi 1.8) agar kompatibel dengan Room
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "1.8"
     }
 }
 
+// Definisikan versi untuk Room (Commit 3)
+val roomVersion = "2.6.0"
+
 dependencies {
+    // Commit 2: ViewModel dan LiveData (Dihapus spasi dan diketik ulang)
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+
+    // Commit 3: Room Database
+    implementation("androidx.room:room-runtime:$roomVersion")
+    // Compiler untuk Room
+    kapt("androidx.room:room-compiler:$roomVersion")
+
+    // Dependency yang sudah ada/direkomendasikan (termasuk Fragment)
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
