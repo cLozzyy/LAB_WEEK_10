@@ -26,8 +26,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun prepareViewModel() {
-        // Mengamati LiveData: LiveData akan memanggil updateText() secara otomatis
-        // setiap kali nilainya berubah, menghilangkan error type mismatch.
+        // Mengamati LiveData: menghilangkan error "Argument type mismatch"
         viewModel.total.observe(this) { total ->
             updateText(total)
         }
